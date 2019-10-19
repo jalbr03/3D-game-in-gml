@@ -69,6 +69,20 @@
             "value": "0",
             "varName": "size",
             "varType": 0
+        },
+        {
+            "id": "b5321a68-8950-4343-8c6d-742e23000349",
+            "modelName": "GMObjectProperty",
+            "mvc": "1.0",
+            "listItems": null,
+            "multiselect": false,
+            "rangeEnabled": false,
+            "rangeMax": 10,
+            "rangeMin": 0,
+            "resourceFilter": 1023,
+            "value": "0",
+            "varName": "roatation",
+            "varType": 0
         }
     ],
     "solid": false,
