@@ -1,4 +1,6 @@
 //*
+jump = keyboard_check(vk_space);
+
 direction -= (display_mouse_get_x()-display_get_width()/2)/10;
 pitch = clamp(pitch-(display_mouse_get_y()-display_get_height()/2)/10, -80, 80);
 
@@ -32,14 +34,39 @@ switch(keyboard_key){
 		x -= dcos(direction)*4;
 		y += dsin(direction)*4;
 		break;
-	case vk_space:
-		if(z > headHight-jumpHight) z -= jumpspd;
-		show_debug_message("z");
-		show_debug_message(z);
-		show_debug_message("jump");
-		show_debug_message(headHight+headHight);
-		break;
 }
-if(!keyboard_check(vk_space)){
-	if(z < headHight) z += 2;
+/*
+if(grounded == true){
+	if(keyboard_check(vk_space)){
+		jump = true;
+		grounded = false;
+	}
 }
+
+if(z < headHight-jumpHight) jump = false;
+if(z >= headHight) grounded = true;
+
+if(jump == true) z -= jumpspd;
+if(jump == false && grounded == false) z += 1;
+*/
+if(grounded == true && jump){
+	if(jump){
+		grounded = false;
+		z -= jumpspd;
+	}
+	vsp = 0;
+}
+if(grounded == false) vsp += grav;
+z += vsp
+
+
+//colision
+//are in the obj_game_world
+
+
+
+
+
+
+
+
