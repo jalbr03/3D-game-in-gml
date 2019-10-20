@@ -25,30 +25,30 @@ if(keyboard_check(vk_escape)){
 }
 
 if(left){
-	x -= dsin(direction)*4;
-	y -= dcos(direction)*4;
+	x -= dsin(direction)*walkspd;
+	y -= dcos(direction)*walkspd;
 }
 if(right){
-	x += dsin(direction)*4;
-	y += dcos(direction)*4;
+	x += dsin(direction)*walkspd;
+	y += dcos(direction)*walkspd;
 }
 if(up){
 	x += dcos(direction)*walkspd;
 	y -= dsin(direction)*walkspd;
 }
 if(down){
-	x -= dcos(direction)*4;
-	y += dsin(direction)*4;
+	x -= dcos(direction)*walkspd;
+	y += dsin(direction)*walkspd;
 }
 
 if(crouch) z = headHight/2;
 if(notcrouch) z = headHight;
-if(run){
-	walkspd = 8;
-	if(fov <= 90) fov += 3;
+if(run && up){
+	walkspd = runingspd;
+	if(fov <= MAXfov) fov += 3;
 }else{
-	walkspd = 4;
-	if(fov >= 60) fov -= 5;
+	walkspd = originalwalk;
+	if(fov >= minfov) fov -= 5;
 }
 
 if(z >= headHight) grounded = true;
