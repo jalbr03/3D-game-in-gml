@@ -49,18 +49,20 @@ if(z >= headHight) grounded = true;
 if(jump == true) z -= jumpspd;
 if(jump == false && grounded == false) z += 1;
 */
-if(grounded == true && jump){
+
+if(z >= headHight) grounded = true;
+if(grounded == true){
+	vsp = 0;
 	if(jump){
 		grounded = false;
-		z -= jumpspd;
+		vsp = -jumpHight;
 	}
-	vsp = 0;
 }
 if(grounded == false) vsp += grav;
 z += vsp
+grounded = false;
 
-
-//colision
+//collision 
 //are in the obj_game_world
 
 

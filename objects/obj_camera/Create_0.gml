@@ -18,12 +18,10 @@ camera_set_update_script(camera, camera_update);
 
 pitch = 0;
 direction = 0;
-headHight = -32
-jumpHight = 32;
-jumpspd = 3;
+headHight = -128
+jumpHight = 6;
 z = headHight;
-grounded = true;
+grounded = false;
 jump = false;
-colision = true;
 grav = 0.2;
 vsp = 0;
