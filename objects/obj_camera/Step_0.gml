@@ -1,10 +1,22 @@
 //*
 jump = keyboard_check(vk_space);
+left = keyboard_check(ord("A"));
+right = keyboard_check(ord("D"));
+up = keyboard_check(ord("W"));
+down = keyboard_check(ord("S"));
+crouch = keyboard_check_pressed(vk_shift);
+notcrouch = keyboard_check_released(vk_shift);
+run = keyboard_check(vk_control);
+
+project_matrix = matrix_build_projection_perspective_fov(fov,view_get_wport(0)/view_get_hport(0), 1, 32000);
+camera_set_proj_mat(camera, project_matrix);
+view_set_camera(0,camera);
+camera_set_update_script(camera, camera_update);
 
 direction -= (display_mouse_get_x()-display_get_width()/2)/10;
 pitch = clamp(pitch-(display_mouse_get_y()-display_get_height()/2)/10, -80, 80);
 
-display_mouse_set(display_get_width()/2, display_get_height()/2);
+if(display_mouse_get_x() < display_get_width()) display_mouse_set(display_get_width()/2, display_get_height()/2);
 
 window_set_cursor(cr_none);
 
@@ -12,43 +24,32 @@ if(keyboard_check(vk_escape)){
 	game_end();
 }
 
-//controls
-switch(keyboard_key){
-	case vk_left:
-	case ord("A"):
-		x -= dsin(direction)*4;
-		y -= dcos(direction)*4;
-		break;
-	case vk_right:
-	case ord("D"):
-		x += dsin(direction)*4;
-		y += dcos(direction)*4;
-		break;
-	case vk_up:
-	case ord("W"):
-		x += dcos(direction)*4;
-		y -= dsin(direction)*4;
-		break;
-	case vk_down:
-	case ord("S"):
-		x -= dcos(direction)*4;
-		y += dsin(direction)*4;
-		break;
+if(left){
+	x -= dsin(direction)*4;
+	y -= dcos(direction)*4;
 }
-/*
-if(grounded == true){
-	if(keyboard_check(vk_space)){
-		jump = true;
-		grounded = false;
-	}
+if(right){
+	x += dsin(direction)*4;
+	y += dcos(direction)*4;
+}
+if(up){
+	x += dcos(direction)*walkspd;
+	y -= dsin(direction)*walkspd;
+}
+if(down){
+	x -= dcos(direction)*4;
+	y += dsin(direction)*4;
 }
 
-if(z < headHight-jumpHight) jump = false;
-if(z >= headHight) grounded = true;
-
-if(jump == true) z -= jumpspd;
-if(jump == false && grounded == false) z += 1;
-*/
+if(crouch) z = headHight/2;
+if(notcrouch) z = headHight;
+if(run){
+	walkspd = 8;
+	if(fov <= 90) fov += 3;
+}else{
+	walkspd = 4;
+	if(fov >= 60) fov -= 5;
+}
 
 if(z >= headHight) grounded = true;
 if(grounded == true){
@@ -59,11 +60,10 @@ if(grounded == true){
 	}
 }
 if(grounded == false) vsp += grav;
-z += vsp
+z += vsp;
 grounded = false;
 
-//collision 
-//are in the obj_game_world
+//collision are in the obj_game_world
 
 
 
